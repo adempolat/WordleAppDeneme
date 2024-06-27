@@ -1,0 +1,410 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:padding="16dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/coinsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textStyle="bold"
+            android:fontFamily="@font/montserrat_alternates"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/coinIcon"
+            android:layout_width="24dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_coin"
+            android:layout_marginStart="6dp" />
+    </LinearLayout>
+
+    <!-- Confetti View -->
+    <nl.dionsegijn.konfetti.xml.KonfettiView
+        android:id="@+id/konfettiView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
+
+    <!-- Main Game Layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center">
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/levelTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat_alternates"
+                android:text="Level: 1"
+                android:textSize="26sp" />
+
+        </LinearLayout>
+
+        <!-- Guess Rows and Other UI elements here -->
+
+        <!-- Guess Row 1 -->
+        <LinearLayout
+            android:id="@+id/guessRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="16dp">
+            <EditText
+                android:id="@+id/letter11"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+            <EditText
+                android:id="@+id/letter12"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+            <EditText
+                android:id="@+id/letter13"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+            <EditText
+                android:id="@+id/letter14"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+            <EditText
+                android:id="@+id/letter15"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+        <!-- Guess Row 2 -->
+        <LinearLayout
+            android:id="@+id/guessRow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="16dp">
+            <EditText
+                android:id="@+id/letter21"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+            <EditText
+                android:id="@+id/letter22"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+            <EditText
+                android:id="@+id/letter23"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+            <EditText
+                android:id="@+id/letter24"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+            <EditText
+                android:id="@+id/letter25"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+        <!-- Guess Row 3 -->
+        <LinearLayout
+            android:id="@+id/guessRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="16dp">
+            <EditText
+                android:id="@+id/letter31"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+            <EditText
+                android:id="@+id/letter32"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+            <EditText
+                android:id="@+id/letter33"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+            <EditText
+                android:id="@+id/letter34"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+            <EditText
+                android:id="@+id/letter35"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+        <!-- Guess Row 4 -->
+        <LinearLayout
+            android:id="@+id/guessRow4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="16dp">
+            <EditText
+                android:id="@+id/letter41"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+            <EditText
+                android:id="@+id/letter42"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+            <EditText
+                android:id="@+id/letter43"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+            <EditText
+                android:id="@+id/letter44"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+            <EditText
+                android:id="@+id/letter45"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+        <!-- Guess Row 5 -->
+        <LinearLayout
+            android:id="@+id/guessRow5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="16dp">
+            <EditText
+                android:id="@+id/letter51"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+            <EditText
+                android:id="@+id/letter52"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+            <EditText
+                android:id="@+id/letter53"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+            <EditText
+                android:id="@+id/letter54"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+            <EditText
+                android:id="@+id/letter55"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/letter_background"
+                android:gravity="center"
+                android:inputType="textCapCharacters"
+                android:maxLength="1"
+                android:fontFamily="@font/montserrat_alternates"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+        <!-- Button to submit guess -->
+        <Button
+            android:id="@+id/submitGuessButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_alternates"
+            android:text="Tahmin Et" />
+
+        <!-- Button to get a hint -->
+        <Button
+            android:id="@+id/hintButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="İpucu - 30"
+            android:fontFamily="@font/montserrat_alternates"
+            android:drawableRight="@drawable/ic_coin"
+            android:layout_marginTop="16dp" />
+    </LinearLayout>
+</FrameLayout>
