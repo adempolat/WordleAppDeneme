@@ -1,68 +1,497 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:gravity="end"
-        android:padding="16dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/coinsTextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:layout_marginEnd="6dp"
             android:text="0"
-            android:textStyle="bold"
-            android:fontFamily="@font/montserrat_alternates"
             android:textSize="18sp" />
 
         <ImageView
             android:id="@+id/coinIcon"
             android:layout_width="24dp"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_coin"
-            android:layout_marginStart="6dp" />
+            android:src="@drawable/ic_coin" />
+    </LinearLayout>
+
+
+    <!-- Günlük Ödül Çubuğu -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:orientation="horizontal">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:backgroundTint="#00ab8f"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <FrameLayout
+                    android:layout_width="70dp"
+                    android:layout_height="70dp">
+
+                    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                        android:id="@+id/fiveLetterProgressBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:cpb_background_progressbar_color="#E0E0E0"
+                        app:cpb_background_progressbar_width="7dp"
+                        app:cpb_progress="50"
+                        app:cpb_progress_max="100"
+                        app:cpb_progressbar_color="@color/black"
+                        app:cpb_progressbar_width="7dp"
+                        app:cpb_round_border="true" />
+
+                    <TextView
+                        android:id="@+id/fiveLetterLevelText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/montserrat_alternates"
+                        android:gravity="center"
+                        android:text="Seviye 1"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="10sp" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/fiveLetterWordsButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/montserrat_alternates"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:text="5 Harfli\nKelimeler"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:backgroundTint="#ff5470"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <FrameLayout
+                    android:layout_width="70dp"
+                    android:layout_height="70dp">
+
+                    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                        android:id="@+id/sixLetterProgressBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:cpb_background_progressbar_color="#E0E0E0"
+                        app:cpb_background_progressbar_width="7dp"
+                        app:cpb_progress="50"
+                        app:cpb_progress_max="100"
+                        app:cpb_progressbar_color="@color/black"
+                        app:cpb_progressbar_width="7dp"
+                        app:cpb_round_border="true" />
+
+                    <TextView
+                        android:id="@+id/sixLetterLevelText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/montserrat_alternates"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:text="Seviye 1"
+                        android:textColor="@color/black"
+                        android:textSize="10sp" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/sixLetterWordsButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/montserrat_alternates"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="6 Harfli\nKelimeler"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="16dp">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/fiveLetterWordsButton"
-            android:layout_width="wrap_content"
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="5 Harfli Kelimeler - Seviye: 1"
-            android:fontFamily="@font/montserrat_alternates" />
-
-        <Button
-            android:id="@+id/sixLetterWordsButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="6 Harfli Kelimeler - Seviye: 1"
+            android:layout_margin="5dp"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/montserrat_alternates" />
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:backgroundTint="#fca474"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="4dp">
 
-        <Button
-            android:id="@+id/sevenLetterWordsButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="7 Harfli Kelimeler - Seviye: 1"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/montserrat_alternates" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="16dp">
 
-        <Button
-            android:id="@+id/timedModeButton"
-            android:layout_width="wrap_content"
+                <FrameLayout
+                    android:layout_width="70dp"
+                    android:layout_height="70dp">
+
+                    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                        android:id="@+id/sevenLetterProgressBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:cpb_background_progressbar_color="#E0E0E0"
+                        app:cpb_background_progressbar_width="7dp"
+                        app:cpb_progress="50"
+                        app:cpb_progress_max="100"
+                        app:cpb_progressbar_color="@color/black"
+                        app:cpb_progressbar_width="7dp"
+                        app:cpb_round_border="true" />
+
+                    <TextView
+                        android:id="@+id/sevenLetterLevelText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/montserrat_alternates"
+                        android:gravity="center"
+                        android:text="Seviye 1"
+                        android:textColor="@color/black"
+                        android:textSize="10sp" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/sevenLetterWordsButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/montserrat_alternates"
+                    android:gravity="center"
+                    android:text="7 Harfli\nKelimeler"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Süreli Mod"
+            android:layout_margin="5dp"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/montserrat_alternates" />
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:backgroundTint="#7173ff"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <FrameLayout
+                    android:layout_width="70dp"
+                    android:layout_height="70dp">
+
+                    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                        android:id="@+id/timerModeProgressBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:cpb_background_progressbar_color="#E0E0E0"
+                        app:cpb_background_progressbar_width="7dp"
+                        app:cpb_progress="50"
+                        app:cpb_progress_max="100"
+                        app:cpb_progressbar_color="@color/black"
+                        app:cpb_progressbar_width="7dp"
+                        app:cpb_round_border="true" />
+
+                    <TextView
+                        android:id="@+id/timerModeLevelText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/montserrat_alternates"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:text="Seviye 1"
+                        android:textColor="@color/black"
+                        android:textSize="10sp" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/timerModeWordsButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/montserrat_alternates"
+                    android:gravity="center"
+                    android:text="Süreli\nMod"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
-</FrameLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#ffe171"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/dailyTaskIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_calendar" />
+
+            <TextView
+                android:id="@+id/todayDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/montserrat_alternates"
+                android:text="25/06/2024"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/dailyWordsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="26dp"
+                android:fontFamily="@font/montserrat_alternates"
+                android:text="Günlük Görev"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#ee82ee"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:fontFamily="@font/montserrat_alternates"
+                android:text="Günlük Ödül"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dailyRewardRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp" />
+
+            <TextView
+                android:id="@+id/dailyTaskStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/montserrat_alternates"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:layout_marginTop="8dp" />
+
+            <Button
+                android:id="@+id/claimRewardButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:text="Ödülü Al"
+                android:fontFamily="@font/montserrat_alternates" />
+
+        </LinearLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="5dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:backgroundTint="#e5e4e2"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/iconVibration"
+                    android:layout_width="24dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_basket" />
+
+                <TextView
+                    android:id="@+id/buttonRules"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/montserrat_alternates"
+                    android:text="Market"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="5dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:backgroundTint="#e5e4e2"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/iconSettings"
+                    android:layout_width="24dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/settings" />
+
+                <TextView
+                    android:id="@+id/buttonSettings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/montserrat_alternates"
+                    android:text="Ayarlar"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</LinearLayout>

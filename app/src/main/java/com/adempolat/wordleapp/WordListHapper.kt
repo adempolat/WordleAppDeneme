@@ -39,7 +39,16 @@ object WordListHelper {
         "VİŞNE", "YAKIN", "YALIN",
     )
 
-    fun getRandomWord(): String {
-        return words[Random.nextInt(words.size)]
+    private val sixLetterWords = listOf(
+        "MEŞHUR", "NEŞELİ",
+        "YAPRAK",
+    )
+
+    fun getRandomWord(length: Int = 5): String {
+        return if (length == 5) {
+            words[Random.nextInt(words.size)]
+        } else {
+            sixLetterWords[Random.nextInt(sixLetterWords.size)]
+        }
     }
 }

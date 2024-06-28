@@ -1,40 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".DailyFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"
-        android:padding="16dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/coinsTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:fontFamily="@font/montserrat_alternates"
-            android:textSize="18sp" />
+            android:fontFamily="@font/montserrat_alternates" />
 
         <ImageView
             android:id="@+id/coinIcon"
             android:layout_width="24dp"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_coin"
-            android:layout_marginStart="6dp" />
+            android:layout_marginStart="6dp"
+            android:src="@drawable/ic_coin" />
     </LinearLayout>
 
-    <!-- Confetti View -->
     <nl.dionsegijn.konfetti.xml.KonfettiView
         android:id="@+id/konfettiView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center" />
 
-    <!-- Main Game Layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -49,27 +49,6 @@
             android:gravity="center"
             android:layout_marginBottom="16dp">
 
-            <TextView
-                android:id="@+id/levelTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:fontFamily="@font/montserrat_alternates"
-                android:text="Level: 1"
-                android:textSize="26sp" />
-
-        </LinearLayout>
-
-        <!-- Guess Rows and Other UI elements here -->
-
-        <!-- Guess Row 1 -->
-        <LinearLayout
-            android:id="@+id/guessRow1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginBottom="16dp">
             <EditText
                 android:id="@+id/letter11"
                 android:layout_width="50dp"
@@ -120,27 +99,15 @@
                 android:inputType="textCapCharacters"
                 android:maxLength="1"
                 android:textSize="24sp" />
-            <EditText
-                android:id="@+id/letter16"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="4dp"
-                android:background="@drawable/letter_background"
-                android:gravity="center"
-                android:inputType="textCapCharacters"
-                android:maxLength="1"
-                android:textSize="24sp"
-                android:visibility="gone" />
         </LinearLayout>
 
-        <!-- Guess Row 2 -->
         <LinearLayout
-            android:id="@+id/guessRow2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_marginBottom="16dp">
+
             <EditText
                 android:id="@+id/letter21"
                 android:layout_width="50dp"
@@ -191,27 +158,15 @@
                 android:inputType="textCapCharacters"
                 android:maxLength="1"
                 android:textSize="24sp" />
-            <EditText
-                android:id="@+id/letter26"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="4dp"
-                android:background="@drawable/letter_background"
-                android:gravity="center"
-                android:inputType="textCapCharacters"
-                android:maxLength="1"
-                android:textSize="24sp"
-                android:visibility="gone" />
         </LinearLayout>
 
-        <!-- Guess Row 3 -->
         <LinearLayout
-            android:id="@+id/guessRow3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_marginBottom="16dp">
+
             <EditText
                 android:id="@+id/letter31"
                 android:layout_width="50dp"
@@ -262,27 +217,15 @@
                 android:inputType="textCapCharacters"
                 android:maxLength="1"
                 android:textSize="24sp" />
-            <EditText
-                android:id="@+id/letter36"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="4dp"
-                android:background="@drawable/letter_background"
-                android:gravity="center"
-                android:inputType="textCapCharacters"
-                android:maxLength="1"
-                android:textSize="24sp"
-                android:visibility="gone" />
         </LinearLayout>
 
-        <!-- Guess Row 4 -->
         <LinearLayout
-            android:id="@+id/guessRow4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_marginBottom="16dp">
+
             <EditText
                 android:id="@+id/letter41"
                 android:layout_width="50dp"
@@ -333,27 +276,15 @@
                 android:inputType="textCapCharacters"
                 android:maxLength="1"
                 android:textSize="24sp" />
-            <EditText
-                android:id="@+id/letter46"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="4dp"
-                android:background="@drawable/letter_background"
-                android:gravity="center"
-                android:inputType="textCapCharacters"
-                android:maxLength="1"
-                android:textSize="24sp"
-                android:visibility="gone" />
         </LinearLayout>
 
-        <!-- Guess Row 5 -->
         <LinearLayout
-            android:id="@+id/guessRow5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_marginBottom="16dp">
+
             <EditText
                 android:id="@+id/letter51"
                 android:layout_width="50dp"
@@ -404,20 +335,8 @@
                 android:inputType="textCapCharacters"
                 android:maxLength="1"
                 android:textSize="24sp" />
-            <EditText
-                android:id="@+id/letter56"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="4dp"
-                android:background="@drawable/letter_background"
-                android:gravity="center"
-                android:inputType="textCapCharacters"
-                android:maxLength="1"
-                android:textSize="24sp"
-                android:visibility="gone" />
         </LinearLayout>
 
-        <!-- Button to submit guess -->
         <Button
             android:id="@+id/submitGuessButton"
             android:layout_width="wrap_content"
@@ -425,14 +344,13 @@
             android:fontFamily="@font/montserrat_alternates"
             android:text="Tahmin Et" />
 
-        <!-- Button to get a hint -->
         <Button
             android:id="@+id/hintButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="İpucu - 0"
-            android:fontFamily="@font/montserrat_alternates"
             android:drawableRight="@drawable/ic_coin"
-            android:layout_marginTop="16dp" />
+            android:fontFamily="@font/montserrat_alternates"
+            android:layout_marginTop="16dp"
+            android:text="İpucu - 0" />
     </LinearLayout>
 </FrameLayout>

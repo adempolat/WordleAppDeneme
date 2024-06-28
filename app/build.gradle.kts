@@ -94,4 +94,6 @@ dependencies {
     kapt(libs.compiler)
     implementation(libs.datastore)
     implementation("nl.dionsegijn:konfetti-xml:2.0.4")
+    implementation("com.mikhaellopez:circularprogressbar:3.1.0")
+
 }

@@ -7,7 +7,12 @@
     <fragment
         android:id="@+id/gameFragment"
         android:name="com.adempolat.wordleapp.GameFragment"
-        android:label="GameFragment" />
+        android:label="GameFragment">
+        <argument
+            android:name="wordLength"
+            app:argType="integer"
+            android:defaultValue="5"/>
+    </fragment>
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.adempolat.wordleapp.MainFragment"
@@ -15,5 +20,12 @@
         <action
             android:id="@+id/action_mainFragment_to_gameFragment"
             app:destination="@id/gameFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_dailyFragment"
+            app:destination="@id/dailyFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/dailyFragment"
+        android:name="com.adempolat.wordleapp.DailyFragment"
+        android:label="DailyFragment" />
 </navigation>

@@ -16,46 +16,42 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.navArgs
-import com.adempolat.wordleapp.databinding.FragmentGameBinding
+import com.adempolat.wordleapp.databinding.FragmentDailyBinding
 import nl.dionsegijn.konfetti.core.Party
 import nl.dionsegijn.konfetti.core.Position
 import nl.dionsegijn.konfetti.core.emitter.Emitter
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
 
-class GameFragment : Fragment() {
+class DailyFragment : Fragment() {
 
-    private var _binding: FragmentGameBinding? = null
+    private var _binding: FragmentDailyBinding? = null
     private val binding get() = _binding!!
 
-    private var secretWord = "" // The word to guess
+    private var secretWord = "" // Tahmin edilecek kelime
     private var currentGuessRow = 0
     private var coins = 0
-    private var level = 1
     private var isFirstHintUsed = false
     private var wordLength = 5
     private lateinit var sharedPreferences: SharedPreferences
     private val handler = Handler(Looper.getMainLooper())
     private val hintIndices = mutableListOf<Int>()
 
-    private val args: GameFragmentArgs by navArgs()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentGameBinding.inflate(inflater, container, false)
+        _binding = FragmentDailyBinding.inflate(inflater, container, false)
         sharedPreferences = requireContext().getSharedPreferences("game_prefs", Context.MODE_PRIVATE)
         coins = sharedPreferences.getInt("coins", 0)
-        wordLength = args.wordLength
-        level = sharedPreferences.getInt("level_$wordLength", 1)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        secretWord = WordListHelper.getRandomWord(wordLength) // Set random word at the start of the game
+        secretWord = WordListHelper.getRandomWord(wordLength) // Oyunun başında rastgele kelime belirle
 
         val guessRows = createGuessRows()
 
@@ -65,15 +61,14 @@ class GameFragment : Fragment() {
         binding.submitGuessButton.setOnClickListener {
             val guess = getGuess(guessRows[currentGuessRow]).uppercase()
             if (guess.length == wordLength) {
-                binding.submitGuessButton.isEnabled = false // Disable the button
+                binding.submitGuessButton.isEnabled = false // Butonu devre dışı bırak
                 provideFeedback(guess, guessRows[currentGuessRow]) {
                     if (guess == secretWord) {
                         coins += 10
-                        level++
                         saveGameData()
-                        updateCoinsAndLevel()
-                        startConfetti()
+                        updateCoins()
                         showWinDialog(currentGuessRow + 1)
+                        markDayOnCalendar()
                     } else if (currentGuessRow < 4) {
                         currentGuessRow++
                         setupGuessRow(guessRows[currentGuessRow])
@@ -81,7 +76,7 @@ class GameFragment : Fragment() {
                         showLoseDialog(secretWord)
                     }
                     handler.postDelayed({
-                        binding.submitGuessButton.isEnabled = true // Re-enable the button after 1 second
+                        binding.submitGuessButton.isEnabled = true // 1 saniye sonra butonu tekrar etkinleştir
                     }, 1000)
                 }
             }
@@ -95,14 +90,14 @@ class GameFragment : Fragment() {
             } else if (coins >= 30) {
                 coins -= 30
                 saveGameData()
-                updateCoinsAndLevel()
+                updateCoins()
                 giveHint(guessRows[currentGuessRow])
             } else {
                 showInsufficientCoinsDialog()
             }
         }
 
-        updateCoinsAndLevel()
+        updateCoins()
         updateHintButtonText()
     }
 
@@ -124,7 +119,6 @@ class GameFragment : Fragment() {
     private fun saveGameData() {
         with(sharedPreferences.edit()) {
             putInt("coins", coins)
-            putInt("level_$wordLength", level)
             apply()
         }
     }
@@ -137,9 +131,8 @@ class GameFragment : Fragment() {
         }
     }
 
-    private fun updateCoinsAndLevel() {
+    private fun updateCoins() {
         binding.coinsTextView.text = coins.toString()
-        binding.levelTextView.text = "Level: $level"
     }
 
     private fun setupGuessRows(guessRows: List<List<EditText>>) {
@@ -151,10 +144,10 @@ class GameFragment : Fragment() {
     }
 
     private fun setupGuessRow(guessRow: List<EditText>) {
-        // Disable all rows first
+        // Önce tüm satırları devre dışı bırak
         setupGuessRows(createGuessRows())
 
-        // Enable the current guess row
+        // Mevcut tahmin satırını etkinleştir
         guessRow.forEachIndexed { index, editText ->
             editText.isEnabled = true
             editText.addTextChangedListener(object : TextWatcher {
@@ -184,7 +177,7 @@ class GameFragment : Fragment() {
             })
         }
 
-        // Focus the first non-hint EditText
+        // İlk ipucu olmayan EditText'e odaklan
         var firstNonHintIndex = 0
         while (firstNonHintIndex < guessRow.size && hintIndices.contains(firstNonHintIndex)) {
             firstNonHintIndex++
@@ -208,7 +201,7 @@ class GameFragment : Fragment() {
 
         val colorAssignments = Array(wordLength) { Color.RED }
 
-        // First pass: check for correct positions
+        // İlk geçiş: doğru pozisyonları kontrol et
         for (i in guess.indices) {
             if (guess[i] == secretWord[i]) {
                 colorAssignments[i] = Color.GREEN
@@ -216,7 +209,7 @@ class GameFragment : Fragment() {
             }
         }
 
-        // Second pass: check for incorrect positions
+        // İkinci geçiş: yanlış pozisyonları kontrol et
         for (i in guess.indices) {
             if (colorAssignments[i] != Color.GREEN && secretWord.contains(guess[i]) && secretWordCharCount[guess[i]]!! > 0) {
                 colorAssignments[i] = Color.YELLOW
@@ -229,9 +222,9 @@ class GameFragment : Fragment() {
                 guessRow[i].setBackgroundColor(colorAssignments[i])
                 guessRow[i].setTextColor(Color.BLACK)
                 if (i == guess.length - 1) {
-                    handler.postDelayed(onComplete, 500) // Wait for animations to complete before calling onComplete
+                    handler.postDelayed(onComplete, 500) // Animasyonların tamamlanmasını bekleyin
                 }
-            }, i * 300L) // 300ms delay for each letter
+            }, i * 300L) // Her harf için 300ms gecikme
         }
     }
 
@@ -250,7 +243,7 @@ class GameFragment : Fragment() {
                 dialog.dismiss()
                 resetGame()
             }
-        }, 500) // Show dialog after 500ms delay for animations
+        }, 500) // Animasyonlar için 500ms gecikme
     }
 
     private fun showLoseDialog(word: String) {
@@ -268,7 +261,7 @@ class GameFragment : Fragment() {
                 dialog.dismiss()
                 resetGame()
             }
-        }, 500) // Show dialog after 500ms delay for animations
+        }, 500) // Animasyonlar için 500ms gecikme
     }
 
     private fun showInsufficientCoinsDialog() {
@@ -283,7 +276,7 @@ class GameFragment : Fragment() {
 
     private fun resetGame() {
         currentGuessRow = 0
-        secretWord = WordListHelper.getRandomWord(wordLength) // Reset with a new random word
+        secretWord = WordListHelper.getRandomWord(wordLength) // Yeni rastgele kelime ile sıfırla
         hintIndices.clear()
         isFirstHintUsed = false
         updateHintButtonText()
@@ -317,19 +310,14 @@ class GameFragment : Fragment() {
         }
     }
 
-    private fun startConfetti() {
-        binding.konfettiView.start(
-            Party(
-                speed = 5f,
-                maxSpeed = 30f,
-                damping = 0.9f,
-                angle = 0,
-                spread = 360,
-                colors = listOf(Color.RED, Color.YELLOW, Color.GREEN, Color.BLUE, Color.MAGENTA),
-                emitter = Emitter(duration = 5000, TimeUnit.MILLISECONDS).max(500),
-                position = Position.Relative(0.5, 0.0)
-            )
-        )
+    private fun markDayOnCalendar() {
+        val today = Calendar.getInstance().time
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val formattedDate = dateFormat.format(today)
+        with(sharedPreferences.edit()) {
+            putBoolean(formattedDate, true)
+            apply()
+        }
     }
 
     override fun onDestroyView() {
