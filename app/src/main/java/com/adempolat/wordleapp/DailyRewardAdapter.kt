@@ -32,7 +32,7 @@ class DailyRewardAdapter(private val context: Context) : RecyclerView.Adapter<Da
 
         fun bind(day: Int, isClaimed: Boolean) {
             dayTextView.text = day.toString()
-            coinIcon.setImageResource(if (isClaimed) R.drawable.ic_tick else R.drawable.ic_coin)
+            coinIcon.setImageResource(if (isClaimed) R.drawable.ic_tick else R.drawable.coin)
         }
     }
 }

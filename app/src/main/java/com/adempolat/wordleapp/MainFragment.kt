@@ -9,11 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adempolat.wordleapp.databinding.FragmentMainBinding
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
+import java.text.SimpleDateFormat
 import java.util.*
 
 class MainFragment : Fragment() {
@@ -22,8 +24,14 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var handler: Handler
-    private lateinit var runnable: Runnable
+    private var runnable: Runnable? = null
     private lateinit var dailyRewardAdapter: DailyRewardAdapter
+
+    private val todayDate: String
+        get() {
+            val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            return sdf.format(Date())
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +45,8 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.todayDate.text = todayDate
 
         val coins = sharedPreferences.getInt("coins", 0)
         binding.coinsTextView.text = coins.toString()
@@ -54,8 +64,21 @@ class MainFragment : Fragment() {
             navigateToGameFragment(6)
         }
 
+        binding.sevenLetterWordsButton.setOnClickListener {
+            navigateToGameFragment(7)
+        }
+
         binding.dailyWordsButton.setOnClickListener {
-            findNavController().navigate(R.id.action_mainFragment_to_dailyFragment)
+            if (isDailyTaskAvailable()) {
+                findNavController().navigate(R.id.action_mainFragment_to_dailyFragment)
+                saveDailyTaskDate()
+            } else {
+                showDailyTaskUnavailableDialog()
+            }
+        }
+
+        binding.btnMarket.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_marketFragment)
         }
 
         dailyRewardAdapter = DailyRewardAdapter(requireContext())
@@ -83,8 +106,11 @@ class MainFragment : Fragment() {
     private fun setupDailyReward() {
         val lastClaimTime = sharedPreferences.getLong("last_claim_time", 0)
         val currentTime = System.currentTimeMillis()
+        val claimedDays = sharedPreferences.getInt("claimed_days", 0)
 
-        if (currentTime - lastClaimTime >= 60 * 1000) { // 1 dakika
+        if (claimedDays >= 7) {
+            showAllRewardsClaimedDialog()
+        } else if (currentTime - lastClaimTime >= 60 * 60 * 1000) { // 1 saat
             // Kullanıcıya ödül ver
             binding.claimRewardButton.isEnabled = true
             binding.dailyTaskStatus.text = "Ödülünüz hazır!"
@@ -117,12 +143,14 @@ class MainFragment : Fragment() {
         runnable = object : Runnable {
             override fun run() {
                 val elapsedTime = System.currentTimeMillis() - lastClaimTime
-                val remainingTime = 60 * 1000 - elapsedTime // 1 dakika
+                val remainingTime = 60 * 60 * 1000 - elapsedTime // 1 saat
 
                 if (remainingTime > 0) {
-                    val remainingSeconds = (remainingTime / 1000).toInt()
+                    val remainingMinutes = (remainingTime / 1000 / 60).toInt()
+                    val remainingSeconds = ((remainingTime / 1000) % 60).toInt()
                     binding.dailyTaskStatus.text = String.format(
-                        "Bir sonraki ödül için: %02d saniye",
+                        "Bir sonraki ödül için: %02d dakika %02d saniye",
+                        remainingMinutes,
                         remainingSeconds
                     )
                     handler.postDelayed(this, 1000)
@@ -132,12 +160,52 @@ class MainFragment : Fragment() {
                 }
             }
         }
-        handler.post(runnable)
+        handler.post(runnable!!)
+    }
+
+    private fun isDailyTaskAvailable(): Boolean {
+        val lastDailyTaskDate = sharedPreferences.getString("last_daily_task_date", "")
+        return lastDailyTaskDate != todayDate
+    }
+
+    private fun saveDailyTaskDate() {
+        with(sharedPreferences.edit()) {
+            putString("last_daily_task_date", todayDate)
+            apply()
+        }
+    }
+
+    private fun showDailyTaskUnavailableDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Günlük Görev")
+        builder.setMessage("Günlük görevi sadece bir defa yapabilirsiniz. Yarın tekrar deneyin.")
+        builder.setPositiveButton("Tamam") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.create().show()
+    }
+
+    private fun showAllRewardsClaimedDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Tüm Ödüller Alındı")
+        builder.setMessage("Tüm ödülleri aldınız. 50 altın kazandınız!")
+        builder.setPositiveButton("Tamam") { dialog, _ ->
+            dialog.dismiss()
+            val coins = sharedPreferences.getInt("coins", 0) + 50
+            with(sharedPreferences.edit()) {
+                putInt("coins", coins)
+                putInt("claimed_days", 0)
+                apply()
+            }
+            binding.coinsTextView.text = coins.toString()
+            dailyRewardAdapter.notifyDataSetChanged()
+        }
+        builder.create().show()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        handler.removeCallbacks(runnable)
+        runnable?.let { handler.removeCallbacks(it) }
     }
 }

@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1"
+        android:fontFamily="@font/montserrat_alternates"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:gravity="center"
@@ -20,5 +21,5 @@
         android:id="@+id/coinIcon"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/ic_coin" />
+        android:src="@drawable/coin" />
 </LinearLayout>

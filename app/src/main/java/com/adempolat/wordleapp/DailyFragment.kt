@@ -16,6 +16,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.adempolat.wordleapp.databinding.FragmentDailyBinding
 import nl.dionsegijn.konfetti.core.Party
 import nl.dionsegijn.konfetti.core.Position
@@ -32,7 +33,6 @@ class DailyFragment : Fragment() {
     private var secretWord = "" // Tahmin edilecek kelime
     private var currentGuessRow = 0
     private var coins = 0
-    private var isFirstHintUsed = false
     private var wordLength = 5
     private lateinit var sharedPreferences: SharedPreferences
     private val handler = Handler(Looper.getMainLooper())
@@ -58,20 +58,24 @@ class DailyFragment : Fragment() {
         setupGuessRows(guessRows)
         setupGuessRow(guessRows[currentGuessRow])
 
+        // İlk harfi doğru olarak göster
+        setFirstLetterCorrect(guessRows[currentGuessRow])
+
         binding.submitGuessButton.setOnClickListener {
             val guess = getGuess(guessRows[currentGuessRow]).uppercase()
             if (guess.length == wordLength) {
                 binding.submitGuessButton.isEnabled = false // Butonu devre dışı bırak
                 provideFeedback(guess, guessRows[currentGuessRow]) {
                     if (guess == secretWord) {
-                        coins += 10
+                        coins += 50
                         saveGameData()
                         updateCoins()
                         showWinDialog(currentGuessRow + 1)
                         markDayOnCalendar()
-                    } else if (currentGuessRow < 4) {
+                    } else if (currentGuessRow < 5) { // 6 tahmin hakkı
                         currentGuessRow++
                         setupGuessRow(guessRows[currentGuessRow])
+                        setFirstLetterCorrect(guessRows[currentGuessRow]) // Yeni satıra geçildiğinde ipucu ver
                     } else {
                         showLoseDialog(secretWord)
                     }
@@ -82,28 +86,12 @@ class DailyFragment : Fragment() {
             }
         }
 
-        binding.hintButton.setOnClickListener {
-            if (!isFirstHintUsed) {
-                isFirstHintUsed = true
-                updateHintButtonText()
-                giveHint(guessRows[currentGuessRow])
-            } else if (coins >= 30) {
-                coins -= 30
-                saveGameData()
-                updateCoins()
-                giveHint(guessRows[currentGuessRow])
-            } else {
-                showInsufficientCoinsDialog()
-            }
-        }
-
         updateCoins()
-        updateHintButtonText()
     }
 
     private fun createGuessRows(): List<List<EditText>> {
         val guessRows = mutableListOf<List<EditText>>()
-        for (i in 1..5) {
+        for (i in 1..6) { // 6 tahmin hakkı
             val row = mutableListOf<EditText>()
             for (j in 1..wordLength) {
                 val resId = resources.getIdentifier("letter$i$j", "id", requireContext().packageName)
@@ -120,14 +108,6 @@ class DailyFragment : Fragment() {
         with(sharedPreferences.edit()) {
             putInt("coins", coins)
             apply()
-        }
-    }
-
-    private fun updateHintButtonText() {
-        if (!isFirstHintUsed) {
-            binding.hintButton.text = "İpucu - 0"
-        } else {
-            binding.hintButton.text = "İpucu - 30"
         }
     }
 
@@ -187,6 +167,17 @@ class DailyFragment : Fragment() {
         }
     }
 
+    private fun setFirstLetterCorrect(guessRow: List<EditText>) {
+        val firstLetter = secretWord[0].toString()
+        guessRow[0].apply {
+            setText(firstLetter)
+            setBackgroundColor(Color.GREEN)
+            setTextColor(Color.BLACK)
+            isEnabled = false
+            hintIndices.add(0) // İlk harf için hintIndex ekle
+        }
+    }
+
     private fun getGuess(guessRow: List<EditText>): String {
         return guessRow.joinToString("") { it.text.toString() }
     }
@@ -238,10 +229,11 @@ class DailyFragment : Fragment() {
             val dialog = builder.create()
             dialog.show()
 
-            dialogView.findViewById<TextView>(R.id.winMessage).text = "Tebrikler! $attempts. denemede kazandınız."
+            dialogView.findViewById<TextView>(R.id.winMessage).text = "Tebrikler! Günlük Görevinizi Tamamladınız.\nÖdülünüz: 50 coin"
+            dialogView.findViewById<Button>(R.id.playAgainButton).text = "Ana Menüye Dön"
             dialogView.findViewById<Button>(R.id.playAgainButton).setOnClickListener {
                 dialog.dismiss()
-                resetGame()
+                findNavController().navigate(R.id.action_dailyFragment_to_mainFragment)
             }
         }, 500) // Animasyonlar için 500ms gecikme
     }
@@ -256,30 +248,19 @@ class DailyFragment : Fragment() {
             val dialog = builder.create()
             dialog.show()
 
-            dialogView.findViewById<TextView>(R.id.loseMessage).text = "Üzgünüm, bilemediniz. Kelime: $word"
+            dialogView.findViewById<TextView>(R.id.loseMessage).text = "Üzgünüm, bilemediniz. Yarın tekrar dene.\nKelime: $word"
+            dialogView.findViewById<Button>(R.id.playAgainButton).text = "Ana Menüye Dön"
             dialogView.findViewById<Button>(R.id.playAgainButton).setOnClickListener {
                 dialog.dismiss()
-                resetGame()
+                findNavController().navigate(R.id.action_dailyFragment_to_mainFragment)
             }
         }, 500) // Animasyonlar için 500ms gecikme
-    }
-
-    private fun showInsufficientCoinsDialog() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Yetersiz Altın")
-        builder.setMessage("İpucu almak için yeterli altının yok.")
-        builder.setPositiveButton("Tamam") { dialog, _ ->
-            dialog.dismiss()
-        }
-        builder.create().show()
     }
 
     private fun resetGame() {
         currentGuessRow = 0
         secretWord = WordListHelper.getRandomWord(wordLength) // Yeni rastgele kelime ile sıfırla
         hintIndices.clear()
-        isFirstHintUsed = false
-        updateHintButtonText()
         val guessRows = createGuessRows()
 
         guessRows.forEach { row ->
@@ -291,23 +272,7 @@ class DailyFragment : Fragment() {
             }
         }
         setupGuessRow(guessRows[currentGuessRow])
-    }
-
-    private fun giveHint(guessRow: List<EditText>) {
-        val incorrectIndices = secretWord.indices.filter { index ->
-            guessRow[index].text.toString().uppercase() != secretWord[index].toString() && !hintIndices.contains(index)
-        }
-
-        if (incorrectIndices.isNotEmpty()) {
-            val hintIndex = incorrectIndices.random()
-            hintIndices.add(hintIndex)
-            guessRow[hintIndex].apply {
-                setText(secretWord[hintIndex].toString())
-                setBackgroundColor(Color.GREEN)
-                setTextColor(Color.BLACK)
-                isEnabled = false
-            }
-        }
+        setFirstLetterCorrect(guessRows[currentGuessRow])
     }
 
     private fun markDayOnCalendar() {

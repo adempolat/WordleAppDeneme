@@ -28,7 +28,7 @@ class GameFragment : Fragment() {
     private var _binding: FragmentGameBinding? = null
     private val binding get() = _binding!!
 
-    private var secretWord = "" // The word to guess
+    private var secretWord = "" // Tahmin edilecek kelime
     private var currentGuessRow = 0
     private var coins = 0
     private var level = 1
@@ -55,7 +55,7 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        secretWord = WordListHelper.getRandomWord(wordLength) // Set random word at the start of the game
+        secretWord = WordListHelper.getRandomWord(wordLength) // Oyun başladığında rastgele kelime ayarla
 
         val guessRows = createGuessRows()
 
@@ -65,7 +65,7 @@ class GameFragment : Fragment() {
         binding.submitGuessButton.setOnClickListener {
             val guess = getGuess(guessRows[currentGuessRow]).uppercase()
             if (guess.length == wordLength) {
-                binding.submitGuessButton.isEnabled = false // Disable the button
+                binding.submitGuessButton.isEnabled = false // Butonu devre dışı bırak
                 provideFeedback(guess, guessRows[currentGuessRow]) {
                     if (guess == secretWord) {
                         coins += 10
@@ -74,14 +74,14 @@ class GameFragment : Fragment() {
                         updateCoinsAndLevel()
                         startConfetti()
                         showWinDialog(currentGuessRow + 1)
-                    } else if (currentGuessRow < 4) {
+                    } else if (currentGuessRow < 5) { // 4 yerine 5 yaparak tahmin hakkını 6'ya çıkardık
                         currentGuessRow++
                         setupGuessRow(guessRows[currentGuessRow])
                     } else {
                         showLoseDialog(secretWord)
                     }
                     handler.postDelayed({
-                        binding.submitGuessButton.isEnabled = true // Re-enable the button after 1 second
+                        binding.submitGuessButton.isEnabled = true // 1 saniye sonra butonu yeniden etkinleştir
                     }, 1000)
                 }
             }
@@ -108,7 +108,7 @@ class GameFragment : Fragment() {
 
     private fun createGuessRows(): List<List<EditText>> {
         val guessRows = mutableListOf<List<EditText>>()
-        for (i in 1..5) {
+        for (i in 1..6) { // 5 yerine 6 yaparak tahmin hakkını 6'ya çıkardık
             val row = mutableListOf<EditText>()
             for (j in 1..wordLength) {
                 val resId = resources.getIdentifier("letter$i$j", "id", requireContext().packageName)
@@ -139,7 +139,7 @@ class GameFragment : Fragment() {
 
     private fun updateCoinsAndLevel() {
         binding.coinsTextView.text = coins.toString()
-        binding.levelTextView.text = "Level: $level"
+        binding.levelTextView.text = "Seviye: $level"
     }
 
     private fun setupGuessRows(guessRows: List<List<EditText>>) {
@@ -151,10 +151,10 @@ class GameFragment : Fragment() {
     }
 
     private fun setupGuessRow(guessRow: List<EditText>) {
-        // Disable all rows first
+        // Tüm satırları devre dışı bırak
         setupGuessRows(createGuessRows())
 
-        // Enable the current guess row
+        // Geçerli tahmin satırını etkinleştir
         guessRow.forEachIndexed { index, editText ->
             editText.isEnabled = true
             editText.addTextChangedListener(object : TextWatcher {
@@ -184,7 +184,7 @@ class GameFragment : Fragment() {
             })
         }
 
-        // Focus the first non-hint EditText
+        // İlk ipucu olmayan EditText'e odaklan
         var firstNonHintIndex = 0
         while (firstNonHintIndex < guessRow.size && hintIndices.contains(firstNonHintIndex)) {
             firstNonHintIndex++
@@ -208,7 +208,7 @@ class GameFragment : Fragment() {
 
         val colorAssignments = Array(wordLength) { Color.RED }
 
-        // First pass: check for correct positions
+        // İlk geçiş: doğru pozisyonları kontrol et
         for (i in guess.indices) {
             if (guess[i] == secretWord[i]) {
                 colorAssignments[i] = Color.GREEN
@@ -216,7 +216,7 @@ class GameFragment : Fragment() {
             }
         }
 
-        // Second pass: check for incorrect positions
+        // İkinci geçiş: yanlış pozisyonları kontrol et
         for (i in guess.indices) {
             if (colorAssignments[i] != Color.GREEN && secretWord.contains(guess[i]) && secretWordCharCount[guess[i]]!! > 0) {
                 colorAssignments[i] = Color.YELLOW
@@ -229,9 +229,9 @@ class GameFragment : Fragment() {
                 guessRow[i].setBackgroundColor(colorAssignments[i])
                 guessRow[i].setTextColor(Color.BLACK)
                 if (i == guess.length - 1) {
-                    handler.postDelayed(onComplete, 500) // Wait for animations to complete before calling onComplete
+                    handler.postDelayed(onComplete, 500) // Animasyonların tamamlanması için onComplete'i çağırmadan önce bekleyin
                 }
-            }, i * 300L) // 300ms delay for each letter
+            }, i * 300L) // Her harf için 300ms gecikme
         }
     }
 
@@ -250,7 +250,7 @@ class GameFragment : Fragment() {
                 dialog.dismiss()
                 resetGame()
             }
-        }, 500) // Show dialog after 500ms delay for animations
+        }, 500) // Animasyonlar için 500ms gecikme sonrası dialog göster
     }
 
     private fun showLoseDialog(word: String) {
@@ -268,7 +268,7 @@ class GameFragment : Fragment() {
                 dialog.dismiss()
                 resetGame()
             }
-        }, 500) // Show dialog after 500ms delay for animations
+        }, 500) // Animasyonlar için 500ms gecikme sonrası dialog göster
     }
 
     private fun showInsufficientCoinsDialog() {
@@ -283,7 +283,7 @@ class GameFragment : Fragment() {
 
     private fun resetGame() {
         currentGuessRow = 0
-        secretWord = WordListHelper.getRandomWord(wordLength) // Reset with a new random word
+        secretWord = WordListHelper.getRandomWord(wordLength) // Yeni rastgele kelime ile sıfırla
         hintIndices.clear()
         isFirstHintUsed = false
         updateHintButtonText()

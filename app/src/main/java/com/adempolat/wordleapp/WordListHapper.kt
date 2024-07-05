@@ -44,11 +44,26 @@ object WordListHelper {
         "YAPRAK",
     )
 
-    fun getRandomWord(length: Int = 5): String {
-        return if (length == 5) {
-            words[Random.nextInt(words.size)]
-        } else {
-            sixLetterWords[Random.nextInt(sixLetterWords.size)]
+    private val sevenLetterWords = listOf(
+        "ABANMAK",
+                "ABARTIK",
+                "ABARTIŞ",
+                "ABARTMA",
+                "ABAZACA",
+                "ABESLİK",
+                "ABHAZCA",
+                "ABİDEVİ",
+                "ABLAKÇA",
+                "ABLALIK"
+    )
+
+
+    fun getRandomWord(wordLength: Int): String {
+        return when (wordLength) {
+            5 -> words.random()
+            6 -> sixLetterWords.random()
+            7 -> sevenLetterWords.random()
+            else -> throw IllegalArgumentException("Unsupported word length: $wordLength")
         }
     }
 }
