@@ -54,7 +54,7 @@ class MainFragment : Fragment() {
         updateLevelInfo("level_5", binding.fiveLetterLevelText, binding.fiveLetterProgressBar)
         updateLevelInfo("level_6", binding.sixLetterLevelText, binding.sixLetterProgressBar)
         updateLevelInfo("level_7", binding.sevenLetterLevelText, binding.sevenLetterProgressBar)
-        updateLevelInfo("level_timer", binding.timerModeLevelText, binding.timerModeProgressBar)
+        updateLevelInfo("level_8", binding.eightLetterLevelText, binding.eightLetterProgressBar)
 
         binding.fiveLetterWordsButton.setOnClickListener {
             navigateToGameFragment(5)
@@ -66,6 +66,10 @@ class MainFragment : Fragment() {
 
         binding.sevenLetterWordsButton.setOnClickListener {
             navigateToGameFragment(7)
+        }
+
+        binding.eightLetterWordsButton.setOnClickListener {
+            navigateToGameFragment(8)
         }
 
         binding.dailyWordsButton.setOnClickListener {

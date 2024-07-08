@@ -36,7 +36,6 @@ class GameFragment : Fragment() {
     private var wordLength = 5
     private lateinit var sharedPreferences: SharedPreferences
     private val handler = Handler(Looper.getMainLooper())
-    private val hintIndices = mutableListOf<Int>()
 
     private val args: GameFragmentArgs by navArgs()
 
@@ -162,21 +161,9 @@ class GameFragment : Fragment() {
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     if (s?.length == 1 && index < guessRow.size - 1) {
-                        var nextIndex = index + 1
-                        while (nextIndex < guessRow.size && hintIndices.contains(nextIndex)) {
-                            nextIndex++
-                        }
-                        if (nextIndex < guessRow.size) {
-                            guessRow[nextIndex].requestFocus()
-                        }
+                        guessRow[index + 1].requestFocus()
                     } else if (s?.isEmpty() == true && index > 0) {
-                        var prevIndex = index - 1
-                        while (prevIndex >= 0 && hintIndices.contains(prevIndex)) {
-                            prevIndex--
-                        }
-                        if (prevIndex >= 0) {
-                            guessRow[prevIndex].requestFocus()
-                        }
+                        guessRow[index - 1].requestFocus()
                     }
                 }
 
@@ -184,14 +171,7 @@ class GameFragment : Fragment() {
             })
         }
 
-        // İlk ipucu olmayan EditText'e odaklan
-        var firstNonHintIndex = 0
-        while (firstNonHintIndex < guessRow.size && hintIndices.contains(firstNonHintIndex)) {
-            firstNonHintIndex++
-        }
-        if (firstNonHintIndex < guessRow.size) {
-            guessRow[firstNonHintIndex].requestFocus()
-        }
+        guessRow[0].requestFocus()
     }
 
     private fun getGuess(guessRow: List<EditText>): String {
@@ -284,7 +264,6 @@ class GameFragment : Fragment() {
     private fun resetGame() {
         currentGuessRow = 0
         secretWord = WordListHelper.getRandomWord(wordLength) // Yeni rastgele kelime ile sıfırla
-        hintIndices.clear()
         isFirstHintUsed = false
         updateHintButtonText()
         val guessRows = createGuessRows()
@@ -302,12 +281,11 @@ class GameFragment : Fragment() {
 
     private fun giveHint(guessRow: List<EditText>) {
         val incorrectIndices = secretWord.indices.filter { index ->
-            guessRow[index].text.toString().uppercase() != secretWord[index].toString() && !hintIndices.contains(index)
+            guessRow[index].text.toString().uppercase() != secretWord[index].toString()
         }
 
         if (incorrectIndices.isNotEmpty()) {
             val hintIndex = incorrectIndices.random()
-            hintIndices.add(hintIndex)
             guessRow[hintIndex].apply {
                 setText(secretWord[hintIndex].toString())
                 setBackgroundColor(Color.GREEN)

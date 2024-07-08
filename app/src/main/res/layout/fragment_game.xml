@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="32dp"
-            android:padding="16dp"
+            android:padding="6dp"
             android:gravity="center">
 
             <LinearLayout
@@ -59,6 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
+                    android:textColor="@color/black"
                     android:fontFamily="@font/montserrat_alternates"
                     android:text="Level: 1"
                     android:textSize="26sp" />
@@ -138,6 +139,17 @@
                     android:visibility="gone" />
                 <EditText
                     android:id="@+id/letter17"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_margin="2dp"
+                    android:background="@drawable/letter_background"
+                    android:gravity="center"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="1"
+                    android:textSize="20sp"
+                    android:visibility="gone" />
+                <EditText
+                    android:id="@+id/letter18"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:layout_margin="2dp"
@@ -229,6 +241,17 @@
                     android:maxLength="1"
                     android:textSize="20sp"
                     android:visibility="gone" />
+                <EditText
+                    android:id="@+id/letter28"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_margin="2dp"
+                    android:background="@drawable/letter_background"
+                    android:gravity="center"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="1"
+                    android:textSize="20sp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <!-- Guess Row 3 -->
@@ -302,6 +325,17 @@
                     android:visibility="gone" />
                 <EditText
                     android:id="@+id/letter37"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_margin="2dp"
+                    android:background="@drawable/letter_background"
+                    android:gravity="center"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="1"
+                    android:textSize="20sp"
+                    android:visibility="gone" />
+                <EditText
+                    android:id="@+id/letter38"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:layout_margin="2dp"
@@ -393,6 +427,17 @@
                     android:maxLength="1"
                     android:textSize="20sp"
                     android:visibility="gone" />
+                <EditText
+                    android:id="@+id/letter48"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_margin="2dp"
+                    android:background="@drawable/letter_background"
+                    android:gravity="center"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="1"
+                    android:textSize="20sp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <!-- Guess Row 5 -->
@@ -475,6 +520,17 @@
                     android:maxLength="1"
                     android:textSize="20sp"
                     android:visibility="gone" />
+                <EditText
+                    android:id="@+id/letter58"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_margin="2dp"
+                    android:background="@drawable/letter_background"
+                    android:gravity="center"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="1"
+                    android:textSize="20sp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <!-- Guess Row 6 -->
@@ -548,6 +604,17 @@
                     android:visibility="gone" />
                 <EditText
                     android:id="@+id/letter67"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_margin="2dp"
+                    android:background="@drawable/letter_background"
+                    android:gravity="center"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="1"
+                    android:textSize="20sp"
+                    android:visibility="gone" />
+                <EditText
+                    android:id="@+id/letter68"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:layout_margin="2dp"
