@@ -72,11 +72,13 @@ class GameFragment : Fragment() {
                         saveGameData()
                         updateCoinsAndLevel()
                         startConfetti()
+                        saveStats(currentGuessRow + 1, true)
                         showWinDialog(currentGuessRow + 1)
                     } else if (currentGuessRow < 5) { // 4 yerine 5 yaparak tahmin hakkını 6'ya çıkardık
                         currentGuessRow++
                         setupGuessRow(guessRows[currentGuessRow])
                     } else {
+                        saveStats(currentGuessRow + 1, false)
                         showLoseDialog(secretWord)
                     }
                     handler.postDelayed({
@@ -124,6 +126,38 @@ class GameFragment : Fragment() {
         with(sharedPreferences.edit()) {
             putInt("coins", coins)
             putInt("level_$wordLength", level)
+            apply()
+        }
+    }
+
+    private fun saveStats(attempts: Int, won: Boolean) {
+        val gamesPlayedKey = "games_played_$wordLength"
+        val gamesWonKey = "games_won_$wordLength"
+        val attemptsKey = "attempts_${wordLength}_$attempts"
+        val winStreakKey = "win_streak_$wordLength"
+        val winRecordKey = "win_record_$wordLength"
+
+        val gamesPlayed = sharedPreferences.getInt(gamesPlayedKey, 0) + 1
+        val gamesWon = if (won) sharedPreferences.getInt(gamesWonKey, 0) + 1 else sharedPreferences.getInt(gamesWonKey, 0)
+        val attemptsCount = sharedPreferences.getInt(attemptsKey, 0) + 1
+        var winStreak = sharedPreferences.getInt(winStreakKey, 0)
+        var winRecord = sharedPreferences.getInt(winRecordKey, 0)
+
+        if (won) {
+            winStreak++
+            if (winStreak > winRecord) {
+                winRecord = winStreak
+            }
+        } else {
+            winStreak = 0
+        }
+
+        with(sharedPreferences.edit()) {
+            putInt(gamesPlayedKey, gamesPlayed)
+            putInt(gamesWonKey, gamesWon)
+            putInt(attemptsKey, attemptsCount)
+            putInt(winStreakKey, winStreak)
+            putInt(winRecordKey, winRecord)
             apply()
         }
     }

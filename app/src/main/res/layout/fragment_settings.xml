@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#2C2C2E"
+    tools:context=".SettingsFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ayarlar"
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:gravity="center"
+        android:paddingBottom="16dp"
+        android:fontFamily="@font/montserrat_alternates" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bildirimler"
+        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        android:paddingTop="8dp"
+        android:fontFamily="@font/montserrat_alternates" />
+
+    <Switch
+        android:id="@+id/switchNotifications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bildirimleri Aç/Kapat"
+        android:textColor="#FFFFFF"
+        android:padding="8dp"
+        android:fontFamily="@font/montserrat_alternates" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFFFFF"
+        android:layout_marginVertical="8dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ses Ayarları"
+        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        android:paddingTop="8dp"
+        android:fontFamily="@font/montserrat_alternates" />
+
+    <Switch
+        android:id="@+id/switchSound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sesleri Aç/Kapat"
+        android:textColor="#FFFFFF"
+        android:padding="8dp"
+        android:fontFamily="@font/montserrat_alternates" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFFFFF"
+        android:layout_marginVertical="8dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Konfeti Animasyonu"
+        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        android:paddingTop="8dp"
+        android:fontFamily="@font/montserrat_alternates" />
+
+    <Switch
+        android:id="@+id/switchConfetti"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Konfeti Animasyonunu Aç/Kapat"
+        android:textColor="#FFFFFF"
+        android:padding="8dp"
+        android:fontFamily="@font/montserrat_alternates" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFFFFF"
+        android:layout_marginVertical="8dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Dil Seçimi"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:layout_weight="1"
+            android:fontFamily="@font/montserrat_alternates" />
+
+        <Spinner
+            android:id="@+id/spinnerLanguage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:spinnerMode="dropdown"
+            android:background="@drawable/spinner_background"
+            android:popupBackground="@color/black"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFFFFF"
+        android:layout_marginVertical="8dp" />
+
+    <Button
+        android:id="@+id/buttonResetStats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="İstatistikleri Sıfırla"
+        android:padding="8dp"
+        android:fontFamily="@font/montserrat_alternates" />
+</LinearLayout>

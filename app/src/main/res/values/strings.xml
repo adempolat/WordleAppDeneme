@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Wordly Master</string>
+    <string-array name="word_lengths">
+        <item>5 Harfli</item>
+        <item>6 Harfli</item>
+        <item>7 Harfli</item>
+        <item>8 Harfli</item>
+    </string-array>
 </resources>

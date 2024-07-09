@@ -3,21 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/gameFragment"
-        android:name="com.adempolat.wordleapp.GameFragment"
-        android:label="GameFragment">
-        <argument
-            android:name="wordLength"
-            app:argType="integer"
-            android:defaultValue="5"/>
+        android:id="@+id/homeFragment"
+        android:name="com.adempolat.wordleapp.HomeFragment"
+        android:label="HomeFragment">
+        <action
+            android:id="@+id/action_homeFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_marketFragment"
+            app:destination="@id/marketFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_dailyFragment"
+            app:destination="@id/dailyFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_statsFragment"
+            app:destination="@id/statsFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.adempolat.wordleapp.MainFragment"
-        android:label="MainFragment" >
+        android:label="MainFragment">
         <action
             android:id="@+id/action_mainFragment_to_gameFragment"
             app:destination="@id/gameFragment" />
@@ -27,18 +39,48 @@
         <action
             android:id="@+id/action_mainFragment_to_marketFragment"
             app:destination="@id/marketFragment" />
+        <action
+            android:id="@+id/action_mainFragment_self"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_statsFragment"
+            app:destination="@id/statsFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/gameFragment"
+        android:name="com.adempolat.wordleapp.GameFragment"
+        android:label="GameFragment">
+        <argument
+            android:name="wordLength"
+            app:argType="integer"
+            android:defaultValue="5" />
+    </fragment>
+
     <fragment
         android:id="@+id/dailyFragment"
         android:name="com.adempolat.wordleapp.DailyFragment"
-        android:label="DailyFragment" >
+        android:label="DailyFragment">
         <action
             android:id="@+id/action_dailyFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/marketFragment"
         android:name="com.adempolat.wordleapp.MarketFragment"
         android:label="fragment_market"
         tools:layout="@layout/fragment_market" />
+
+    <fragment
+        android:id="@+id/statsFragment"
+        android:name="com.adempolat.wordleapp.StatsFragment"
+        android:label="fragment_stats"
+        tools:layout="@layout/fragment_stats" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.adempolat.wordleapp.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>
